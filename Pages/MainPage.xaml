@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ERozaniec.Pages.MainPage"
+             Title="MainPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="70" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="250" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <VerticalStackLayout Grid.Row="1" Grid.Column="1">
+            <VerticalStackLayout.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipedNext" />
+                <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipedPrev" />
+                <SwipeGestureRecognizer Direction="Up" Swiped="OnSwipedPrev" />
+                <SwipeGestureRecognizer Direction="Down" Swiped="OnSwipedNext" />
+            </VerticalStackLayout.GestureRecognizers>
+            <Ellipse Fill="DarkBlue"
+                 WidthRequest="200"
+                 HeightRequest="200"
+                 HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <Picker Grid.Row="2" Grid.Column="1"
+                Title="Wybierz tajemnice" Margin="10"
+                SelectedIndexChanged="Picker_SelectedIndexChanged">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Radosne</x:String>
+                    <x:String>Swiatła</x:String>
+                    <x:String>Bolesne</x:String>
+                    <x:String>Chwalebne</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <FlexLayout x:Name="BeadsContainer" Grid.Row="4" Grid.Column="1" Direction="Row" Wrap="Wrap" JustifyContent="Center" MaximumWidthRequest="315">
+        </FlexLayout>
+    </Grid>
+</ContentPage>
