@@ -1,3 +1,4 @@
+using ERozaniec.Data;
 using ERozaniec.Misc;
 using ERozaniec.Models;
 using Microsoft.Maui.Controls.Shapes;
@@ -10,10 +11,18 @@ public partial class MainPage : ContentPage
         .Select(v => new BeadModel() { Order = v, IsCompleted = false })
         .ToList();
 
-    public MainPage()
+    private readonly Color[] _colors = [Color.FromHex("#1E0705"),
+        Color.FromHex("#3B0D09"), Color.FromHex("#761A12"),
+        Color.FromHex("#F59992"), Color.FromHex("#FACCC9")
+    ];
+    private readonly IDatabaseService _databaseService;
+    private IList<PartModel> _chosenParts = [];
+
+    public MainPage(IDatabaseService databaseService)
     {
         InitializeComponent();
         BuildBeads();
+        _databaseService = databaseService;
     }
 
     private void BuildBeads()
@@ -30,7 +39,8 @@ public partial class MainPage : ContentPage
     {
         return new()
         {
-            Fill = bead.IsCompleted ? Brush.DarkGreen : Brush.DarkRed,
+            Fill = bead.IsCompleted ? Brush.YellowGreen :
+                new SolidColorBrush(_colors[((bead.Order - 1) / 10) % 5]),
             WidthRequest = 30,
             HeightRequest = 30,
         };
@@ -38,35 +48,49 @@ public partial class MainPage : ContentPage
 
     private async void OnSwipedNext(object sender, SwipedEventArgs e)
     {
-        BeadModel? beam = _beads.GetFirstNotCompletedBead();
+        BeadModel? bead = _beads.GetFirstNotCompletedBead();
 
-        if (beam is not null)
+        if (bead is not null)
         {
-            beam.IsCompleted = true;
+            bead.IsCompleted = true;
 
             BuildBeads();
 
-            if (beam.Order % 10 == 0)
+            int order = bead.Order % 10;
+
+            if (order == 0)
             {
-                await DisplayAlert("Koniec dziesi¹tka", "<<TEKST TAJEMNICY>>", "PrzejdŸ dalej", "Anuluj");
+                int msgIdx = ((bead.Order - 1) / 10) % 5;
+
+                PartModel? part = _chosenParts.FirstOrDefault(c => c.Order == msgIdx);
+
+                if (part is not null)
+                {
+                    await DisplayAlert(part.Name, part.Description, "OK", "Anuluj");
+                }
             }
         }
     }
 
     private void OnSwipedPrev(object sender, SwipedEventArgs e)
     {
-        BeadModel? beam = _beads.GetLastCompletedBead();
+        BeadModel? bead = _beads.GetLastCompletedBead();
 
-        if (beam is not null)
+        if (bead is not null)
         {
-            beam.IsCompleted = false;
+            bead.IsCompleted = false;
 
             BuildBeads();
         }
     }
 
-    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+    private async void Picker_SelectedIndexChanged(object sender, EventArgs e)
     {
-        Console.WriteLine("ABCCC");
+        if (sender is Picker picker)
+        {
+            RosaryPart part = (RosaryPart)picker.SelectedIndex;
+            _chosenParts = await _databaseService.GetPartsAsync(part)
+                .ConfigureAwait(false) ?? [];
+        }
     }
 }
