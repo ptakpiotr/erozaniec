@@ -11,13 +11,16 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="70" />
             <RowDefinition Height="250" />
             <RowDefinition Height="20" />
         </Grid.RowDefinitions>
-        <VerticalStackLayout Grid.Row="2" Grid.Column="1">
+        <Label Grid.Row="1" Grid.Column="1" Text="ERóżaniec" FontSize="24" FontAttributes="Bold" />
+
+        <VerticalStackLayout Grid.Row="3" Grid.Column="1">
             <VerticalStackLayout.GestureRecognizers>
                 <SwipeGestureRecognizer Direction="Left" Swiped="OnSwipedNext" />
                 <SwipeGestureRecognizer Direction="Right" Swiped="OnSwipedPrev" />
@@ -30,8 +33,8 @@
                  HorizontalOptions="Center" />
         </VerticalStackLayout>
 
-        <Picker Grid.Row="1" Grid.Column="1"
-                Title="Wybierz tajemnice" Margin="30"
+        <Picker Grid.Row="2" Grid.Column="1"
+                Title="Wybierz tajemnice" Margin="30" x:Name="PartPicker"
                 SelectedIndexChanged="Picker_SelectedIndexChanged">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
@@ -42,7 +45,8 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
-        <FlexLayout x:Name="BeadsContainer" Grid.Row="4" Grid.Column="1" Direction="Row" Wrap="Wrap" JustifyContent="Center" MaximumWidthRequest="315">
+        <Button x:Name="ResetBtn" Grid.Row="4" Grid.Column="1" Margin="10" Text="Resetuj" MaximumWidthRequest="100" Clicked="ResetBtn_Clicked"></Button>
+        <FlexLayout x:Name="BeadsContainer" Grid.Row="5" Grid.Column="1" Direction="Row" Wrap="Wrap" JustifyContent="Center" MaximumWidthRequest="315">
         </FlexLayout>
     </Grid>
 </ContentPage>

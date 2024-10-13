@@ -11,9 +11,9 @@
         ContentTemplate="{DataTemplate pages:MainPage}"
         Route="Domowa" />
     <ShellContent
-       Title="Różaniec"
+       Title="Rozważania"
        ContentTemplate="{DataTemplate pages:RosaryPage}"
-       Route="Różaniec" />
+       Route="Rozwazania" />
     <ShellContent
          Title="O aplikacji"
          ContentTemplate="{DataTemplate pages:AboutPage}"

@@ -2,8 +2,38 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ERozaniec.Pages.RosaryPage"
-             Title="Tajemnice">
-    <VerticalStackLayout>
-
-    </VerticalStackLayout>
+             Title="Rozważania">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Picker Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+            x:Name="PartPicker" Title="Wybierz tajemnice" MaximumHeightRequest="40"
+            SelectedIndexChanged="Picker_SelectedIndexChanged">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Radosne</x:String>
+                    <x:String>Swiatła</x:String>
+                    <x:String>Bolesne</x:String>
+                    <x:String>Chwalebne</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <VerticalStackLayout Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Spacing="30">
+            <Label x:Name="t1" Text="Tajemnica 1" />
+            <Label x:Name="t2" Text="Tajemnica 2" />
+            <Label x:Name="t3" Text="Tajemnica 3" />
+            <Label x:Name="t4" Text="Tajemnica 4" />
+            <Label x:Name="t5" Text="Tajemnica 5" />
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>

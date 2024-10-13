@@ -7,15 +7,24 @@
         <Label
             Text="Autorem aplikacji jest Piotr Ptak"
             VerticalOptions="Center"
-            HorizontalOptions="Center" 
-            Margin="40"/>
+            HorizontalOptions="Center"
+            Margin="40" />
         <Image
             Source="{AppThemeBinding Light=github_mark.png, Dark=github_mark_white.png}"
             WidthRequest="100"
             HeightRequest="100">
             <Image.GestureRecognizers>
-                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_TappedGithub" />
             </Image.GestureRecognizers>
         </Image>
+        <Label 
+            Text="Rozważania pochodzą z opoka.org"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"
+            Margin="20">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_TappedOpoka" />
+            </Label.GestureRecognizers>
+        </Label>
     </VerticalStackLayout>
 </ContentPage>

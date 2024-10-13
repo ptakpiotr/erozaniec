@@ -13,7 +13,9 @@ namespace ERozaniec.Data
             if (_conn is not null)
                 return;
 
-            _conn = new SQLiteAsyncConnection(_dbPath);
+            string fullDbPath = Path.Combine(FileSystem.AppDataDirectory, _dbPath);
+
+            _conn = new SQLiteAsyncConnection(fullDbPath);
 
             await _conn.CreateTableAsync<PartModel>()
                 .ConfigureAwait(false);
@@ -37,6 +39,15 @@ namespace ERozaniec.Data
         public async Task AddManyPartsAsync(IList<PartModel> parts)
         {
             await InitAsync().ConfigureAwait(false);
+
+            int cnt = await _conn.Table<PartModel>().CountAsync()
+                .ConfigureAwait(false);
+
+            if (cnt > 0)
+            {
+                await _conn.Table<PartModel>().DeleteAsync(_ => true)
+                    .ConfigureAwait(false);
+            }
 
             await _conn.InsertAllAsync(parts, true)
                 .ConfigureAwait(false);
